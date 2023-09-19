@@ -55,7 +55,7 @@ Third-party recommended resources about BIOS hacking.
   An experimental legacy Option ROM project by [Miralium Research]
 
 <!-- Challenges -->
-[A Silent Boot]: challenges/normal/a_silent_boot/README.md
+[A Silent Boot]: challenges/easy/a_silent_boot/README.md
 [A Tale Of Memories]: challenges/normal/a_tale_of_memories/README.md
 [Absolute Virtualization]: challenges/easy/absolute_virtualization/README.md
 [Code In Abyss]: challenges/hard/code_in_abyss/README.md
