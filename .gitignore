@@ -1,0 +1,19 @@
+# Ignore OS-specific files
+.DS_Store
+
+# Ignore temporary files
+*.tmp
+*~
+
+# Ignore system and IDE files
+/.idea
+/.vscode
+.project
+.settings
+
+# Ignore macOS folder attributes
+._*
+
+# Ignore miscellaneous files
+Thumbs.db
+desktop.ini
