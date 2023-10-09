@@ -7,12 +7,12 @@
 > _sound system. Even so, I'll keep on beeping for as long as I continue to_
 > _exist._
 
-### Goal
+### Objective
 
-Replace the regular [Power-On Self-Test (POST) beep] with a custom tune of your
-choosing.
+Customize the standard [Power-On Self-Test (POST) beep] with a personalized
+tune of your preference.
 
-### Details
+### Overview
 
 Early models of the IBM PC and its clones tipically featured an internal
 [speaker] connected to the motherboard. It was generally driven by the

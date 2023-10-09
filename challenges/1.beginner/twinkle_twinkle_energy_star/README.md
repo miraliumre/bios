@@ -5,12 +5,12 @@
 
 > _See? It's a happy BIOS after all!_
 
-### Goal
+### Objective
 
 Replace the [ENERGY STAR] logo on the POST screen with a custom image of your
 choosing.
 
-### Details
+### Overview
 
 The ENERGY STAR logo signifies that a product complies with the energy
 efficiency standards established by the ENERGY STAR program, managed by the
@@ -35,7 +35,7 @@ includes an `/epa` command line option.
 
 ### Hints
 
-No hints are available for this challenge.
+No specific guidance is provided for this challenge.
 
 ### Solution
 

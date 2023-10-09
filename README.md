@@ -1,44 +1,44 @@
 # BIOS
 
-Welcome to RET·MOE's BIOS repository! Here, you'll find a list of resources
-dedicated to BIOS reverse engineering, along with challenges designed to serve
-as a starting point for those eager to delve into the realm of PC firmware
-modification.
+Welcome to the **RET·MOE BIOS Repository**! This repository offers a curated
+selection of resources and challenges dedicated to the exploration and
+understanding of BIOS reverse engineering and firmware modification.
 
-While the contents here exclusively focus on legacy PC firmware, we have plans
-for an upcoming repository that will be entirely dedicated to UEFI.
+While our focus primarily lies on legacy PC firmware, we are in the process of
+developing a new repository solely dedicated to UEFI, expected to be launched
+soon.
 
 ## Challenges
 
-### Easy
+Embark on a journey through varying levels of challenges tailored to provide a
+hands-on experience in BIOS reverse engineering and modification.
 
-These challenges are straightforward and do not require any coding abilities or
-previous knowledge on BIOS firmware. They can be quickly completed by any
-person with minimal computer skills and are excellent for getting to know BIOS
-modification tools such as CBROM and MMTool.
+### Beginner
+
+Perfect for individuals new to BIOS firmware, these challenges require no prior
+coding knowledge. They serve as an excellent introduction to BIOS modification
+tools like CBROM and MMTool.
 
 - [A Silent Boot]
 - [Absolute Virtualization]
 - [Twinkle Twinkle Energy Star]
 
-### Normal
+### Intermediate
 
-The challenges in this level require knowledge of 16-bit assembly programming
-for the x86 architecture, the ability to analyze and modify binary programs by
-using reverse engineering tools (such as [Ghidra] or [radare]) and a basic
-understanding of the typical structure of BIOS firmware.
+These challenges demand a fundamental understanding of 16-bit assembly
+programming for x86 architecture, and basic proficiency in analyzing and
+modifying binary programs using reverse engineering tools such as [Ghidra] or
+[radare]. A basic grasp of BIOS firmware structure is beneficial.
 
 - [A Tale Of Memories]
 - [Manic PiXiE Dream Boot]
 - [The Disappearance Of The PC Speaker]
 
-### Hard
+### Advanced
 
-In addition to 16-bit assembly programming and reverse engineering skills,
-these challenges require a more in-depth understanding of BIOS firmware, the
-specific design of the motherboard being worked on, and the x86 architecture.
-They can be time-consuming to complete, even for those who are most
-experienced.
+For the seasoned explorers, these challenges necessitate a deeper comprehension
+of BIOS firmware, specific motherboard designs, and the x86 architecture. They
+pose a more complex, time-demanding venture even for the experienced.
 
 - [Code In Abyss]
 - [Load Me From The ROM]
@@ -46,24 +46,25 @@ experienced.
 
 ## Links
 
-Third-party recommended resources about BIOS hacking.
+Below is a collection of third-party resources recommended for those keen on
+delving deeper into BIOS hacking.
 
-- [AMI BIOS Code Injection]  
-  A repository by [Davidson Francis]
+- **[AMI BIOS Code Injection]**  
+  A repository curated by [Davidson Francis]
 
-- [Magnolia]  
-  An experimental legacy Option ROM project by [Miralium Research]
+- **[Magnolia]**  
+  An experimental legacy Option ROM project lead by [Miralium Research]
 
 <!-- Challenges -->
-[A Silent Boot]: challenges/easy/a_silent_boot/README.md
-[A Tale Of Memories]: challenges/normal/a_tale_of_memories/README.md
-[Absolute Virtualization]: challenges/easy/absolute_virtualization/README.md
-[Code In Abyss]: challenges/hard/code_in_abyss/README.md
-[Load Me From The ROM]: challenges/hard/load_me_from_the_rom/README.md
-[Manic PiXiE Dream Boot]: challenges/normal/manic_pixie_dream_boot/README.md
-[Rewrite The Bytes]: challenges/hard/rewrite_the_bytes/README.md
-[The Disappearance Of The PC Speaker]: challenges/normal/the_disappearance_of_the_pc_speaker/README.md
-[Twinkle Twinkle Energy Star]: challenges/easy/twinkle_twinkle_energy_star/README.md
+[A Silent Boot]: challenges/1.beginner/a_silent_boot/README.md
+[A Tale Of Memories]: challenges/2.intermediate/a_tale_of_memories/README.md
+[Absolute Virtualization]: challenges/1.beginner/absolute_virtualization/README.md
+[Code In Abyss]: challenges/3.advanced/code_in_abyss/README.md
+[Load Me From The ROM]: challenges/3.advanced/load_me_from_the_rom/README.md
+[Manic PiXiE Dream Boot]: challenges/2.intermediate/manic_pixie_dream_boot/README.md
+[Rewrite The Bytes]: challenges/3.advanced/rewrite_the_bytes/README.md
+[The Disappearance Of The PC Speaker]: challenges/2.intermediate/the_disappearance_of_the_pc_speaker/README.md
+[Twinkle Twinkle Energy Star]: challenges/1.beginner/twinkle_twinkle_energy_star/README.md
 
 <!-- External links -->
 [AMI BIOS Code Injection]: https://github.com/Theldus/AMI_BIOS_CodeInjection

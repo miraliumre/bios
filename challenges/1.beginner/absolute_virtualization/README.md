@@ -6,11 +6,12 @@
 > _malfunctions, I envisioned a software I once knew and glimpsed its familiar_
 > _interface once more._
 
-### Goal
+### Objective
 
-Use the Award Modular BIOS v4.51PG as a BIOS on [QEMU].
+The objective is to successfully use the Award Modular BIOS v4.51PG as a BIOS
+on [QEMU].
 
-### Details
+### Overview
 
 QEMU incorporates a `-bios` command line flag that allows users to designate a
 firmware file for the simulated machine to utilize. However, the functionality
@@ -38,7 +39,7 @@ hardware that QEMU emulates.
 
 ### Hints
 
-No hints are available for this challenge.
+No specific guidance is provided for this challenge.
 
 ### Solution
 
