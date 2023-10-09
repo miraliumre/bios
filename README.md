@@ -53,7 +53,7 @@ delving deeper into BIOS hacking.
   A repository curated by [Davidson Francis]
 
 - **[Magnolia]**  
-  An experimental legacy Option ROM project lead by [Miralium Research]
+  An experimental legacy Option ROM project led by [Miralium Research]
 
 <!-- Challenges -->
 [A Silent Boot]: challenges/1.beginner/a_silent_boot/README.md
