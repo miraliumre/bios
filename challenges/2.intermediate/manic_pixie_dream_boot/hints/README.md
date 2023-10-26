@@ -27,7 +27,7 @@ approach to implementing a network boot ROM shifted from hooking INT 18h to
 utilizing the Bootstrap Entry Vector (BEV), a field in the PnP header of an
 option ROM which causes the BIOS to treat that ROM as a boot option.
 
-### The botom line
+### The bottom line
 
 To achieve the challenge's goal, you're expected to write your own option ROM
 and use it to replace the pre-existing network boot ROM found in the original
