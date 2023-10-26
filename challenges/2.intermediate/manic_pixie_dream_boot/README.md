@@ -28,13 +28,10 @@ located on the network card—as observed in removable PCI Express network cards
 — or embedded within the BIOS itself, characteristic of integrated network
 cards.
 
-Legacy network boot ROMs encapsulate a Bootstrap Entry Vector (BEV), a
-directive pointer delineating the code requisite for operating system loading.
-The BEV is specified within a PnP Expansion header housed in the Option ROM.
-
 ### Hints
 
-> Work in progress.
+If you require additional information to accomplish this challenge, please
+refer to the [Hints] file.
 
 ### Solution
 
@@ -43,6 +40,9 @@ The BEV is specified within a PnP Expansion header housed in the Option ROM.
 <!-- External links -->
 [network boot ROM]: https://en.wikipedia.org/wiki/Option_ROM#Network_boot_ROM
 [Preboot Execution Environment]: https://en.wikipedia.org/wiki/Preboot_Execution_Environment
+
+<!-- Internal links -->
+[Hints]: hints/README.md
 
 <!-- Included assets -->
 [AMIBIOS 8]: ../../../assets/badges/amibios_8.svg
