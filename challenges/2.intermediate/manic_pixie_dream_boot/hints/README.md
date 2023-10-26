@@ -17,11 +17,6 @@ As time progressed, manufacturers repurposed INT 18h for initiating network
 boot procedures. A network boot ROM would hook INT 18h, triggering the network
 boot process when INT 18h was invoked by the computer's BIOS.
 
-With the development of industry standards such as Plug and Play (PnP), newer
-network boot ROMs shifted from hooking INT 18h to utilizing the Bootstrap Entry
-Vector (BEV), a field in the PnP header of an Option ROM which causes the BIOS
-to treat that Option ROM as a boot option.
-
 With the advent of industry standards like [Plug and Play (PnP)], the preferred
 approach to implementing a network boot ROM shifted from hooking INT 18h to
 utilizing the Bootstrap Entry Vector (BEV), a field in the PnP header of an
