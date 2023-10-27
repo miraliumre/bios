@@ -28,7 +28,8 @@ it to obtain a memory dump from an early boot stage.
 
 ### Hints
 
-> Work in progress.
+If you require additional information to accomplish this challenge, please
+refer to the [hints] file.
 
 ### Solution
 
@@ -38,6 +39,9 @@ it to obtain a memory dump from an early boot stage.
 [mdump]: https://github.com/Theldus/AMI_BIOS_CodeInjection/tree/main/tools/mdump
 [POST]: https://en.wikipedia.org/wiki/Power-on_self-test
 [Davidson Francis]: https://github.com/Theldus
+
+<!-- Internal links -->
+[hints]: hints/README.md
 
 <!-- Included assets -->
 [AMIBIOS 8]: ../../../assets/badges/amibios_8.svg
