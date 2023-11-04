@@ -29,14 +29,12 @@ and use it to replace the pre-existing network boot ROM found in the original
 BIOS firmware image.
 
 For **AMIBIOS 8** firmware images, the network boot ROM is easily identifiable
-and replaceable with the help of **MMTool**. The process is similar for
+and replaceable with the help of **[MMTool]**. The process is similar for
 **Award Modular BIOS v6.00PG**, despite slightly more inconvenient considering
-the less-than-friendly command line interface of **CBROM** and its tendency to
+the less-than-friendly command line interface of **[CBROM]** and its tendency to
 produce corrupted firmware images.
 
-```
-INCLUDE SCREENSHOTS HERE
-```
+![MMTool]
 
 To have your option ROM is identified as a boot option by the BIOS, you can
 choose one of two paths:
@@ -50,8 +48,11 @@ mentions of **PnP**, **BEV**, and **INT 18h**. This will be helpful, but be
 prepared for additional research to create a comprehensive boot ROM as the
 challenge demands.
 
-
 <!-- External links -->
 [BIOS Boot Specification]: https://www.scs.stanford.edu/nyu/04fa/lab/specsbbs101.pdf
 [IBM Cassette Basic]: https://en.wikipedia.org/wiki/IBM_BASIC
 [Plug and Play (PnP)]: https://en.wikipedia.org/wiki/Legacy_Plug_and_Play
+
+<!-- Included assets -->
+[MMTool]: MMTool_Network_Boot_ROM.png
+[CBROM]: CBROM_Network_Boot_ROM.png
