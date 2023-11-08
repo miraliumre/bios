@@ -28,7 +28,8 @@ AMIBIOS 6 image, achieving execution of arbitrary code in the context of SMM.
 
 ### Hints
 
-> Work in progress.
+If you require additional information to accomplish this challenge, please
+refer to the [hints] file.
 
 ### Solution
 
@@ -37,6 +38,9 @@ AMIBIOS 6 image, achieving execution of arbitrary code in the context of SMM.
 <!-- External links -->
 [malware]: https://www.microsoft.com/en-us/security/blog/2020/11/12/system-management-mode-deep-dive-how-smm-isolation-hardens-the-platform/
 [SMM]: https://wiki.osdev.org/System_Management_Mode
+
+<!-- Internal links -->
+[hints]: hints/README.md
 
 <!-- Included assets -->
 [AMIBIOS 8]: ../../../assets/badges/amibios_8.svg
