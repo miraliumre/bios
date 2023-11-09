@@ -38,7 +38,8 @@ BIOS on the motherboard initially provisioned with AMIBIOS.
 
 ### Hints
 
-> Work in progress.
+If you require additional information to accomplish this challenge, please
+refer to the [hints] file.
 
 ### Solution
 
@@ -46,6 +47,9 @@ BIOS on the motherboard initially provisioned with AMIBIOS.
 
 <!-- External links -->
 [coreboot]: https://www.coreboot.org/
+
+<!-- Internal links -->
+[hints]: hints/README.md
 
 <!-- Included assets -->
 [Award Modular BIOS v6.00PG]: ../../../assets/badges/award_6-00PG.svg
