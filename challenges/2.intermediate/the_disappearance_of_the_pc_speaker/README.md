@@ -39,7 +39,8 @@ that plays a custom tune.
 
 ### Hints
 
-> Work in progress.
+If you require additional information to accomplish this challenge, please
+refer to the [hints] file.
 
 ### Solution
 
@@ -52,6 +53,9 @@ that plays a custom tune.
 [speaker]: https://wiki.osdev.org/PC_Speaker
 [techniques]: https://www.youtube.com/watch?v=jD4m9JvLy2Y
 [tiny speakers]: https://commons.wikimedia.org/wiki/File:PC-Speaker_IMG_9311-9312.JPG
+
+<!-- Internal links -->
+[hints]: hints/README.md
 
 <!-- Included assets -->
 [AMIBIOS 8]: ../../../assets/badges/amibios_8.svg
