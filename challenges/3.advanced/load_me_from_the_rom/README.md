@@ -28,7 +28,8 @@ via the computer's serial port.
 
 ### Hints
 
-> Work in progress.
+If you require additional information to accomplish this challenge, please
+refer to the [hints] file.
 
 ### Solution
 
@@ -36,6 +37,9 @@ via the computer's serial port.
 
 <!-- External links -->
 [reset vector]: https://en.wikipedia.org/wiki/Reset_vector
+
+<!-- Internal links -->
+[hints]: hints/README.md
 
 <!-- Included assets -->
 [Bootblock]: ../../../assets/badges/bootblock.svg
