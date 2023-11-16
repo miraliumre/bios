@@ -38,8 +38,8 @@ was originally equipped with AMIBIOS, porting the BIOS ROM from the
 
 This pair of motherboards share the same [Intel G41] northbridge and the 
 [Intel ICH7] southbridge, but differ in their Super I/O, as the IPM41-D3 uses
-the Winbond W83627DHG and the GA-G41M-Combo uses the ITE IT8718F-S, as per the
-comparsion table below.
+the [Winbond W83627DHG] and the GA-G41M-Combo uses the [ITE IT8718F-S], as per
+the comparison table below.
 
 |                 |   **IPM41-D3**    |      **GA-G41M-Combo**      |
 |:---------------:|:-----------------:|:---------------------------:|
@@ -81,4 +81,6 @@ Good luck! =)
 [Intel G41]: https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4-chipset-family-datasheet.pdf
 [Intel ICH7]: https://www.intel.com/content/dam/doc/datasheet/i-o-controller-hub-7-datasheet.pdf
 [IPM41-D3]: http://pcwarebr.com.br/produtos_mb_ipm41-d3.php
+[ITE IT8718F-S]: https://datasheetspdf.com/pdf-file/652192/ITE/IT8718F/1
 [Super I/O]: https://en.wikipedia.org/wiki/Super_I/O
+[Winbond W83627DHG]: http://www.chipset-ic.com/datasheet/W83627DHG-P.pdf
