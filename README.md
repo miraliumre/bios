@@ -1,19 +1,40 @@
 # BIOS
 
-Welcome to the **RET·MOE BIOS Repository**! This repository offers a curated
-selection of resources and challenges dedicated to the exploration and
-understanding of BIOS reverse engineering and firmware modification.
+> ⚠️ **Important:** by using this repository and the contents herein, you
+> acknowledge that you have read, understood and accept the [disclaimer].
+
+Welcome to the **Miralium Research BIOS Repository**! This repository offers a
+curated selection of resources and challenges dedicated to the exploration and
+understanding of BIOS firmware reverse engineering and modification.
 
 While our focus primarily lies on legacy PC firmware, we are in the process of
 developing a new repository solely dedicated to UEFI, expected to be launched
-soon.
+in the near future.
 
 ## Challenges
 
 Embark on a journey through varying levels of challenges tailored to provide a
 hands-on experience in BIOS reverse engineering and modification.
 
-### Beginner
+### Tags
+
+Each challenge is marked with one or more of the following tags.
+
+![AMIBIOS 8] ![Award Modular BIOS v6.00PG] ![Award Modular BIOS v4.51PG]
+![Bootblock]
+
+The version tags indicate the firmware versions that the challenge has been
+validated on. They do NOT indicate that the challenge is only appliable to
+those versions. Enthusiasts are encouraged to experiment with other versions,
+although such attempts were not tested by the authors of this repository.
+
+The _Bootblock_ tag is an exception, as it is used to indicate a unique
+challenge which consists of writing firmware-level code from scratch and is,
+therefore, unrelated to existing platforms.
+
+### Difficulty levels
+
+#### Beginner
 
 Perfect for individuals new to BIOS firmware, these challenges require no prior
 coding knowledge. They serve as an excellent introduction to BIOS modification
@@ -23,7 +44,7 @@ tools like CBROM and MMTool.
 - [Absolute Virtualization]
 - [Twinkle Twinkle Energy Star]
 
-### Intermediate
+#### Intermediate
 
 These challenges demand a fundamental understanding of 16-bit assembly
 programming for x86 architecture, and basic proficiency in analyzing and
@@ -34,9 +55,9 @@ modifying binary programs using reverse engineering tools such as [Ghidra] or
 - [Manic PiXiE Dream Boot]
 - [The Disappearance Of The PC Speaker]
 
-### Advanced
+#### Advanced
 
-For the seasoned explorers, these challenges necessitate a deeper comprehension
+For the seasoned explorers, these challenges require a deeper comprehension
 of BIOS firmware, specific motherboard designs, and the x86 architecture. They
 pose a more complex, time-demanding venture even for the experienced.
 
@@ -46,14 +67,20 @@ pose a more complex, time-demanding venture even for the experienced.
 
 ## Links
 
-Below is a collection of third-party resources recommended for those keen on
+Below is a collection of external resources recommended for those interested on
 delving deeper into BIOS hacking.
 
 - **[AMI BIOS Code Injection]**  
-  A repository curated by [Davidson Francis]
+  A repository curated by Davidson Francis ([@Theldus])
 
 - **[Magnolia]**  
   An experimental legacy Option ROM project led by [Miralium Research]
+
+<!-- Included assets -->
+[AMIBIOS 8]: assets/badges/amibios_8.svg
+[Award Modular BIOS v4.51PG]: assets/badges/award_4-51PG.svg
+[Award Modular BIOS v6.00PG]: assets/badges/award_6-00PG.svg
+[Bootblock]: assets/badges/bootblock.svg
 
 <!-- Challenges -->
 [A Silent Boot]: challenges/1.beginner/a_silent_boot/README.md
@@ -67,9 +94,12 @@ delving deeper into BIOS hacking.
 [Twinkle Twinkle Energy Star]: challenges/1.beginner/twinkle_twinkle_energy_star/README.md
 
 <!-- External links -->
+[@Theldus]: https://github.com/theldus
 [AMI BIOS Code Injection]: https://github.com/Theldus/AMI_BIOS_CodeInjection
-[Davidson Francis]: https://github.com/theldus
 [Ghidra]: https://ghidra-sre.org
 [Magnolia]: https://github.com/MiraliumRe/magnolia
 [Miralium Research]: https://miralium.re
 [radare]: https://rada.re/
+
+<!-- Internal links -->
+[disclaimer]: DISCLAIMER.md

@@ -3,8 +3,8 @@
 ![AMIBIOS 8]
 ![Award Modular BIOS v6.00PG]
 
-> _Back then, if we could have replaced this crappy OEM logo, everything would_
-> _have been so much better._
+> _Back then, if we could have replaced this mediocre OEM logo, everything_
+> _would have been so much better._
 
 ### Objective
 

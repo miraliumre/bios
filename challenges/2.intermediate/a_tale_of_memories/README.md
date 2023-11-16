@@ -17,11 +17,11 @@ Gaining a precise insight into the RAM memory's layout at distinct junctures
 during the BIOS code execution is not merely advantageous but often
 indispensable for accomplishing certain BIOS hacking endeavors.
 
-For this precise aim, [Davidson Francis] has crafted a utility named [mdump].
-This tool is coded in assembly language and is capable of being executed as
-bootable code. Nonetheless, the state of the computer's memory after the BIOS
-execution has completed can be substantially different than the state at the
-specific point where you intend to insert your own code.
+For this purpose, [Theldus] has created a utility named [mdump]. This tool is
+coded in assembly language and is capable of being executed as bootable code.
+Nonetheless, the state of the computer's memory after the BIOS execution has
+completed can be substantially different than the state at the specific point
+where you intend to insert your own code.
 
 The task at hand entails injecting mdump into the BIOS framework and leveraging
 it to obtain a memory dump from an early boot stage.
