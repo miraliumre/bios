@@ -73,6 +73,11 @@ delving deeper into BIOS hacking.
 - **[AMI BIOS Code Injection]**  
   A repository curated by Davidson Francis ([@Theldus])
 
+- **[Legacy BIOS (Custom GPT)]**  
+  A custom [ChatGPT-based] assistant built by [Miralium Research] for queries
+  related to technical aspects of legacy BIOS firmware, publicly available for
+  ChatGPT Plus subscribers
+
 - **[Magnolia]**  
   An experimental legacy Option ROM project led by [Miralium Research]
 
@@ -96,7 +101,9 @@ delving deeper into BIOS hacking.
 <!-- External links -->
 [@Theldus]: https://github.com/theldus
 [AMI BIOS Code Injection]: https://github.com/Theldus/AMI_BIOS_CodeInjection
+[ChatGPT-based]: https://openai.com/blog/introducing-gpts
 [Ghidra]: https://ghidra-sre.org
+[Legacy BIOS (Custom GPT)]: https://chat.openai.com/g/g-JWikipKoC-legacy-bios
 [Magnolia]: https://github.com/MiraliumRe/magnolia
 [Miralium Research]: https://miralium.re
 [radare]: https://rada.re/
