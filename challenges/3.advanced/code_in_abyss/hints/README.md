@@ -68,7 +68,7 @@ Developed by [Theldus], sdtlist is a compact utility that works with the
 Single-Link Arch BIOS (`1B`) module of an AMIBIOS 8 ROM. Its primary function
 is to enumerate all the handlers within the BIOS.
 
-For instance, using sdtlist to inspect a the ASUS P5Q motherboard BIOS reveals
+For instance, using sdtlist to inspect an ASUS P5Q motherboard's BIOS reveals
 a comprehensive list of its handlers, as follows.
 
 ```text
