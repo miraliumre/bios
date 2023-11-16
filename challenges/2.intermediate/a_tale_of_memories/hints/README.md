@@ -1,79 +1,98 @@
 # Hints for A Tale of Memories
 
-The `mdump` tool operates in two modes:
+The mdump tool is a versatile program capable of operating in two distinct
+modes:
 
-1. Bootable mode, that doesn't require explanation
-2. Injectable mode. The injectable mode is a 'PIE-like' (Position-Independent 
-Executable) mode ready to run from any point in the code, regardless of the 
-chosen address.
+1. **Bootable mode.** The default mode of operation, where mdump is expected to
+   be loaded from the MBR.
 
-The injectable mode only requires that the code be built as follows:
+2. **Injectable mode.** Functions similarly to a
+   [Position-Independent Executable (PIE)], meaning it can execute from an
+   arbitrary injection point in the BIOS firmware, regardless of the memory
+   address it has been loaded to.
+
+### Compiling mdump for injection
+
+To use injectable mode, the code must be compiled with the following commands:
+
 ```bash
-$ make clean         (a clean build is required)
-$ make BOOTABLE=no
+make clean         # Ensures a clean build environment
+make BOOTABLE=no   # Configures for non-bootable, injectable mode 
 ```
 
-The resulting file, `mdump.img`, is ready to be injected wherever you desire, 
-without altering its binary or source code.
+The output file named `mdump.img` will be ready for injection into the desired
+location without requiring any modifications.
 
-## Where to Place It?
-The big question is: where to put it, and what's the physical address of that 
-location?
+### Deciding on the injection point
 
-There are several places in the BIOS where `mdump` can be placed, but the only 
-observation to be made is that the location needs to be empty, and that's 
-tricky! Just looking for 'gaps' in the BIOS ROM doesn't imply that the memory 
-position is empty: various locations might be data sections to be filled at 
-runtime or even locations where the BIOS will extract its modules. There are no 
-guarantees that any gap found will be truly empty at runtime unless you know 
-what you're doing.
+In order to choose a suitable location in the BIOS ROM image to inject mdump,
+you might want to adhere to the following tips.
 
-Furthermore, there's the issue of knowing the physical address of such gap, 
-because your injected code needs to be invoked at some point. It may sound like 
-the chicken and egg problem, but Pinczakko's 
-[AMIBIOS8_1B_Utils](https://github.com/pinczakko/AMIBIOS8_1B_Utils) tool can 
-provide the physical address at which each sub-module (of the 1B module) will 
-be loaded into memory.
+- Seek out areas in the BIOS ROM where mdump can be injected. It's essential
+  to identify a genuinely vacant memory region, as appearances can be
+  deceptive. Some regions might look empty at first glance but turn out to be
+  reserved for runtime data or module extraction by the BIOS.
 
-In the end, the answer you're looking for is: **VGA ROM**!!!
+- To actually execute code the injected code, you will need to determine at
+  which memory address it will be present during runtime. This is a challenging
+  task, but it can be approached in a variety of ways:
+  
+    - you could analyze memory dumps produced by the mdump tool running in
+      bootable mode;
+      
+    - for AMIBIOS, an option is to use Pinczakko's [AMIBIOS_1B_Utils] to reveal
+      the runtime addresses of modules within AMIBIOS' _Single-Link Arch BIOS_
+      module;
+      
+    - lastly, you could make educated guesses based on the available
+      documentation and on reverse engineering BIOS source code.
 
-The VGA ROM has several advantages, including:
-1. It's always extracted at `C000:0000`, so its address is predictable.
-2. It's loaded at very early stages of the BIOS, which is fundamentally 
-important.
-3. There is usually plenty of free space available.
+### The video BIOS
 
-So, to summarize, you need to:
-- Find an empty position within the VGA ROM (preferably after the last used 
-byte, and give some extra space, like ~128 bytes, just to be cautious).
-- Inject your code there.
+Modding the [video BIOS] to inject mdump is an appealing option for several
+reasons:
 
-The final address of your code will be: **0xC000:chosen_offset**, simple, isn't 
-it?
+- it is always extracted at the C000:0000 memory address;
+- it is loaded very early in the BIOS initialization sequence;
+- typically, it has plenty of empty spaces available.
 
-## Where to Execute From?
-Once the `mdump` code is injected, it also needs to be invoked from somewhere, 
-which requires some care as well:
-1. You can't invoke your code before the VGA ROM code exists in memory! 
-Normally, this is not a big problem since the VGA ROM code is extracted very 
-early, but it still requires some attention.
-2. The `mdump` code requires that RAM memory be properly initialized (for 
-obvious reasons). Again, this is not usually a problem unless you're trying to 
-dump memory from the boot block; in that case, RAM is likely to be initialized. 
-In case of doubt, look for instructions that use the stack, such as 
-`push/pop/call/ret`.
+If you choose the video BIOS as your injection point, you will want to locate a
+vacant space within the VGA ROM, ideally beyond the last utilized byte, and
+give it some extra space (maybe about ~128 bytes) for safety. After injection,
+mdump will then predictably be made available during runtime at memory address
+`0xC000:[YOUR_CHOOSEN_OFFSET]`.
 
-A good place that covers both cases is the logo! When the BIOS decides to 
-display the manufacturer's logo on the screen, the VGA ROM must already be up 
-and running, and RAM memory as well.
+### Jump point
 
-How do you find this? It's not as complicated as it seems. Before drawing the 
-logo, the BIOS changes the video mode using `INT 10H, AH = 4f02H - Set SuperVGA 
-Video Mode`, and there's only one occurrence in the entire 1B module, easily 
-found with ndisasm+grep:
+Once mdump has been injected in the BIOS ROM, its code must be actually
+executed (e.g. via a strategically-placed `jmp` instruction). To choose an
+ideal jump point, the following must be taken into consideration.
 
-```asm
-$ ndisasm -b16 1b_module | grep "mov ax,0x4f02" -C 4
+1. **Video initialization.** The execution of mdump must occur **after** the
+   video BIOS code is loaded into memory. This is usually not an issue as the
+   video BIOS is typically loaded early in the boot process, but you might wish
+   to double-check in order to avoid conflicts;
+
+2. **RAM initialization.** mdump code relies on the RAM having already been
+   properly initialized by the BIOS. To ensure the RAM is ready at your chosen
+   jump point, look for operations involving the stack, such as `push`, `pop`,
+   `call` and `ret` instructions.
+
+A reliable jump point to invoke mdump from is right before the display of the
+OEM logo splash screen. At this stage, the video ROM has already been loaded
+and the RAM has been initialized.
+
+To find the point in code where the BIOS displays the OEM logo, you might want
+to look for video mode changes and, more specifically, the
+[Set SuperVGA Video Mode] (`INT 10h / AX = 4F02h`) function.
+
+The following excerpt of reverse engineered assembly code from a Single-Link
+Arch BIOS module extracted from a sample AMIBIOS ROM image demonstrates how the
+BIOS sets up the video mode for displaying the OEM logo. Notice the
+`mov ax, 0x4f02` instruction which is subsequently followed by `int 0x10`.
+
+```bash
+ndisasm -b16 1b_module | grep "mov ax,0x4f02" -C 4
 00001234  06                push es
 00001235  1E                push ds
 00001236  07                pop es
@@ -85,9 +104,17 @@ $ ndisasm -b16 1b_module | grep "mov ax,0x4f02" -C 4
 00001240  6650              push eax
 ```
 
-So, the offset you want to add your `call 0xC000:chosen_offset` (or `jmp 
-0xC000:chosen_offset`) is `0x1239` in the 1B module. (Note that this offset is 
-fake; you need to find it!)
+In this example, you would replace the `mov ax, 0x4f02` instruction at offset
+`0x1239` with a `jmp` to the mdump code at `0xC000:[YOUR_CHOOSEN_OFFSET]`.
 
-There are many other places for this, and each place will provide a unique view 
-of memory for that point in execution!
+### Final note
+
+Different injection points can provide varied perspectives of memory at
+different execution stages. It's important to choose the one that best fits
+your diagnostic or debugging needs.
+
+<!-- External links -->
+[AMIBIOS_1B_Utils]: https://github.com/pinczakko/AMIBIOS8_1B_Utils
+[Position-Independent Executable (PIE)]: https://www.redhat.com/en/blog/position-independent-executables-pie
+[video BIOS]: https://en.wikipedia.org/wiki/Video_BIOS
+[Set SuperVGA Video Mode]: https://www.ctyme.com/intr/rb-0275.htm
