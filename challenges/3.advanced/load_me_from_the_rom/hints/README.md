@@ -95,8 +95,8 @@ The main hints for this challenge are:
 4. Configure the UART device (baud rate, etc.).
 
 Additional tips:
-1. Refer to the datasheet of the Intel ICH7 chipset.
-2. Refer to the datasheet of the Super I/O Winbond W83627DDHG.
+1. Refer to the datasheet of the [Intel ICH7] chipset.
+2. Refer to the datasheet of the [Winbond W83627DHG].
 3. Intel SDM is always welcome (Vol 3A, Chap 10 is especially useful:
 _'Processor Management and Initialization'_).
 
@@ -162,6 +162,8 @@ Good luck!
 <!-- External links -->
 [CAR: Using Cache as RAM in LinuxBIOS]: https://www.coreboot.org/data/yhlu/cache_as_ram_lb_09142006.pdf
 [coreboot]: https://github.com/coreboot/coreboot/tree/master/src/mainboard/intel/dg41wv
+[Intel ICH7]: https://www.intel.com/content/dam/doc/datasheet/i-o-controller-hub-7-datasheet.pdf
 [Intel SDM]: https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html
 [UBRX - L2 cache as instruction RAM (CAiR)]: https://pete.akeo.ie/2011/08/ubrx-l2-cache-as-instruction-ram.html
 [UBRX]: https://github.com/pbatard/ubrx
+[Winbond W83627DHG]: http://www.chipset-ic.com/datasheet/W83627DHG-P.pdf

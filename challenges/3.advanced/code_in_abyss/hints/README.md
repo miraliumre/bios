@@ -41,7 +41,6 @@ variation can occur because when an SMI is executed, it temporarily halts the
 normal operation of the CPU, which can lead to a measurable delay in the
 execution of other instructions.
 
-
 ### Understanding SMIs
 
 [System Management Interrupts (SMIs)] are special events that occur under
