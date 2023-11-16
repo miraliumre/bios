@@ -146,7 +146,7 @@ the **Handle SMI foff** field. This indicates the physical file offset where a
 particular handler is located, which is important for identifying and working
 with these handlers. Additionally, the handler's name, as defined in the ROM,
 can give clues about its function. For example, a handler named `$SMISS` is
-likely related to managing sleep state in the system.
+related to managing sleep state in the system.
 
 Several important considerations must be kept in mind when working with these
 handlers:
