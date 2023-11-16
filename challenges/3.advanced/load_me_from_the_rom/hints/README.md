@@ -1,7 +1,7 @@
 # Hints for Load Me From The ROM
+
 This challenge requires you to write a BIOS (or bootblock)[^bb] from scratch
-for the PCWare IPM41-D3 motherboard that, when the PC is powered on, sends
-any message to the serial port.
+that, when the PC is powered on, sends any message to the serial port.
 
 Contrary to what many may think, it is entirely possible to write a BIOS from
 scratch (Coreboot is there to prove my point), and it is _not as difficult_
@@ -18,7 +18,8 @@ code of the ROM. For this challenge, bootblock and BIOS are effectively the
 same thing: just code stored in ROM memory and executed when the PC is
 powered on.
 
-## CPU Initialization and the Lonely Desert
+### CPU Initialization and the lonely desert
+
 When the PC is powered on, the chipset maps the _end_ of the ROM to the end
 of physical memory, and the first instruction (or the 'reset vector',
 entrypoint, etc.) to be executed will be present/mapped at `FFFF_FFF0`
@@ -27,7 +28,7 @@ mapped to the final 16 bytes of the ROM, and this will be your entrypoint. To
 put it even more simply, a 1MB ROM will have its first instruction executed
 at the offset `1M-16 bytes` of the ROM!
 
-Quoting from the Intel manual (Intel SDM, Vol 3A, Chap 10):
+Quoting from the Intel manual ([Intel SDM], Vol 3A, Chap 10):
 
 > **10.1.4 First Instruction Executed**
 >
@@ -58,7 +59,8 @@ cause the CS selector value to be changed).
 For further information on the initial state of the CPU, please see Intel SDM
 Volume 3A, Chapter 10, "Processor Management and Initialization."
 
-### The Lonely Desert
+### The lonely desert
+
 In this initial stage, the CPU runs on real mode, and executes code directly
 from the ROM, a technique called '_execute-in-place_'. This happens because
 the CPU has yet to 'learn' how to access RAM, and all accesses to it are
@@ -81,7 +83,8 @@ So... what can you do?
 At this point, you essentially have a piece of software that is blind, deaf,
 and mute. Nice, isn't it?
 
-## Exiting the Desert
+## Exiting the desert
+
 To recap, this challenge requires you to perform I/O with the external world
 via the serial port, so something needs to be done about that.
 
@@ -97,20 +100,17 @@ Additional tips:
 3. Intel SDM is always welcome (Vol 3A, Chap 10 is especially useful:
 _'Processor Management and Initialization'_).
 
-The above tips are specific to the PCWare IPM41-D3 motherboard but may be
+The above tips have been validated on the IPM41-D3 motherboard but may be
 applicable to other motherboards with slight adaptations. Also, don't forget
-that this motherboard is supported by [Coreboot], and reading its code might
+that this motherboard is supported by [coreboot], and reading its code might
 come in handy.
 
 Another interesting project is [UBRX], a bootblock/BIOS designed for PC
 recovery in very early stages. It is created by the same author as Rufus and
 has well-written and fascinating code to explore.
 
-[Coreboot]:
-https://github.com/coreboot/coreboot/tree/master/src/mainboard/intel/dg41wv
-[UBRX]: https://github.com/pbatard/ubrx
+### Extra: obtaining memory and moving forward
 
-## Extra: Obtaining Memory and Moving Forward...
 For this challenge, it is not necessary to use RAM, and it is perfectly
 possible to do everything without it, but I believe it's still interesting to
 mention.
@@ -144,12 +144,8 @@ Another interesting advantage of using CAR is that, in addition to the stack,
 it becomes possible to make the processor jump to protected mode and thus
 execute 32-bit code in C, fantastic, isn't it?
 
-[UBRX - L2 cache as instruction RAM (CAiR)]:
-https://pete.akeo.ie/2011/08/ubrx-l2-cache-as-instruction-ram.html
-[CAR: Using Cache as RAM in LinuxBIOS]:
-https://www.coreboot.org/data/yhlu/cache_as_ram_lb_09142006.pdf
+## Final thoughts
 
-## Final Thoughts
 When I wrote my first bootblock/BIOS code, many things became clear and
 demystified, such as the need for RAM for a computer to work, and the entire
 structure of the BIOS ROM: checksum, compressed modules, etc. All of this is
@@ -162,3 +158,10 @@ is strictly necessary or not, etc. I hope that by the end of the challenge,
 this goal has been achieved.
 
 Good luck!
+
+<!-- External links -->
+[CAR: Using Cache as RAM in LinuxBIOS]: https://www.coreboot.org/data/yhlu/cache_as_ram_lb_09142006.pdf
+[coreboot]: https://github.com/coreboot/coreboot/tree/master/src/mainboard/intel/dg41wv
+[Intel SDM]: https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html
+[UBRX - L2 cache as instruction RAM (CAiR)]: https://pete.akeo.ie/2011/08/ubrx-l2-cache-as-instruction-ram.html
+[UBRX]: https://github.com/pbatard/ubrx
