@@ -66,6 +66,7 @@ In order to accomplish the challenge, you might follow a procedure like this:
 3. investigate the source motherboard BIOS ROM by reverse engineering it;
 
 4. look to modify the aspects of the source motherboard's BIOS which might be
+   blocking the target motherboard from booting correctly.
    
 **Notes:** looking for print routines is an useful strategy for pinpointing
 specific locations within your code; in the context of Award BIOSes, an
@@ -76,4 +77,8 @@ Good luck! =)
 
 <!-- External links -->
 [chipset]: https://en.wikipedia.org/wiki/Chipset
+[Gigabyte GA-G41M-Combo]: https://www.gigabyte.com/br/Motherboard/GA-G41M-Combo-rev-20
+[Intel G41]: https://www.intel.com/content/dam/www/public/us/en/documents/datasheets/4-chipset-family-datasheet.pdf
+[Intel ICH7]: https://www.intel.com/content/dam/doc/datasheet/i-o-controller-hub-7-datasheet.pdf
+[IPM41-D3]: http://pcwarebr.com.br/produtos_mb_ipm41-d3.php
 [Super I/O]: https://en.wikipedia.org/wiki/Super_I/O
