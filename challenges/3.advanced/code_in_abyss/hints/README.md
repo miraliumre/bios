@@ -1,61 +1,76 @@
 # Hints for Code in Abyss
-As previously introduced, code in 'System Management Mode' (SMM) is a special 
-code executed by the CPU for very specific scenarios, such as high temperature, 
-low or no fan rotation, and so on. Its interruptions, known as System 
-Management Interrupts (SMIs), are typically triggered by the Super I/O or 
-chipset, although other methods exist.
 
-Commonly referred to as `ring -2`[^r2], code in SMM runs in real mode, 16-bit, 
-and can be triggered at any time, whether already within an operating system or 
-before its execution[^b4]. Furthermore, the memory area in which SMM code runs 
-is referred to as `SMRAM`, typically set as read-only, and code outside of SMM 
-mode cannot even see the code.
+[System Management Mode (SMM)] is a unique operational mode used by CPUs to
+handle specific, critical scenarios like high temperatures or fan failures.
+When certain conditions are met, the CPU switches to this mode in response to
+System Management Interrupts (SMIs). These interrupts are often initiated by
+the Super I/O or the chipset, though other triggering methods exist.
 
-That being said, code executing in SMM mode is nearly[^almost] invisible to an 
-operating system, antivirus software, and so on. Memory dumps (even in ring 0!) 
-cannot read the content of SMRAM. This makes it a fertile ground for attackers!
+In SMM, code is executed in a distinct environment known as _ring -2_[^r2].
+This refers to a level of operation below the normal user and kernel modes
+(rings 0 to 3) of a computer system. The code in SMM operates in a 16-bit real
+mode and can be activated at any point, regardless of whether an operating
+system is running[^b4].
 
-But one question remains: how do you execute your code in SMM mode, and where 
-should you place it?
+The memory region where SMM code runs is called System Management RAM (SMRAM).
+This area is typically set to be read-only and is hidden from other operating
+modes, making the code executing in SMM nearly[^nearly] invisible to the
+operating system, antivirus software, and other utilities. For example, even
+when performing a memory dump in ring 0 (the kernel mode), the contents of
+SMRAM cannot be accessed or read, which can pose security risks as it becomes a
+potential target for attackers.
 
-[^r2]: Technically, 'ring -2' does not exist (just like any of the negative 
-rings). The '-2' designation is used because code in SMM mode runs with certain 
-restrictions that prevent code in ring 0 from accessing SMRAM, and so on. 
-Additionally, the '-1' ring (also informal) is said to be the Hypervisor.
+This challenges consists of figuring out how to execute your own code in SMM
+and where to correctly place it within the system's architecture. This involves
+understanding both the triggering of SMIs and the management of the SMRAM.
 
-[^b4]: An SMI can occur at any time, and there is not much an operating system 
-can do about it.
+[^r2]: Terms such as _ring -3_, _ring -2_ and _ring -1_ are informally used by
+the community, and are used to refer to privilege levels beyond the officially
+defined rings 0 to 3. Ring -1 generally refers to an [hypervisor], while ring
+-2 usually refers to the SMM and ring -3 may refer to code executing on the
+[Intel Management Engine (ME)]. 
 
-[^almost]: 'Nearly' because it may be possible for an operating system to 
-obtain indirect information that an SMI has been executed, such as differences 
-in the execution times of specific instructions (although this can also be 
-mitigated).
+[^b4]: A SMI can happen at any point and the operating system has limited
+ability to address or prevent it.
 
-## Where to place? How to execute?
+[^nearly]: The term 'nearly' is used to indicate that, while it's generally
+hard for an operating system to directly observe when an SMI is executed, there
+might be indirect ways to infer its occurrence. One such indirect method is by
+observing variations in the execution times of certain instructions. This
+variation can occur because when an SMI is executed, it temporarily halts the
+normal operation of the CPU, which can lead to a measurable delay in the
+execution of other instructions.
 
-As mentioned earlier, SMIs are a kind of event generated when specific 
-conditions (usually related to hardware) are met. As the name implies, they are 
-called 'interrupts', but not in the same sense as traditional interrupts that 
-use IVT/IDT. Instead, they also have a table, known as the SMM Dispatch Table 
-(SDT).
 
-In general, there are three approaches:
+### Understanding SMIs
 
-1. Discover a vulnerability in an existing handler.
-2. Add your own handler.
-3. Hack an existing handler.
+[System Management Interrupts (SMIs)] are special events that occur under
+certain hardware-specific conditions. Unlike traditional interrupts, they don't
+use the [Interrupt Vector Table (IVT)] or [Interrupt Descriptor Table (IDT)].
+Instead, they rely on the SMM Dispatch Table (SDT).
 
-In this guide, we will focus on the last option, which involves hacking an 
-existing handler in the SDT.
+There are generally three strategies for working with SMIs:
 
-But one question remains, how do you 'read the SDT'? For this purpose, I 
-present `sdtlist`.
+1. **Exploiting vulnerabilities in existing handlers.** This involves finding
+   and leveraging weaknesses in already existing SMI handlers.
 
-### `sdtlist`
+2. **Creating your own handler.** This means adding a new handler to the
+   system.
 
-`sdtlist` is a small tool created by me (@Theldus). Given the '1B' module of an 
-AMIBIOS8 BIOS, it lists all the handlers present within it. As an example, here 
-are all the handlers from the ASUS P5Q motherboard:
+3. **Modifying existing handlers**: This approach focuses on altering an
+   existing handler in the SDT, which we will focus on in this guide.
+
+The key question is how to access and read the SDT. To address this, we
+may use a specialized tool described in the following section.
+
+### Introducing sdtlist
+
+Developed by [Theldus], sdtlist is a compact utility that works with the
+Single-Link Arch BIOS (`1B`) module of an AMIBIOS 8 ROM. Its primary function
+is to enumerate all the handlers within the BIOS.
+
+For instance, using sdtlist to inspect a the ASUS P5Q motherboard BIOS reveals
+a comprehensive list of its handlers, as follows.
 
 ```text
 $ ./sdt amibody.1b 
@@ -127,47 +142,62 @@ Entry 14:
   Handle SMI foff: 0x4bec5
 ```
 
-The only field of interest is `Handle SMI foff`, which indicates the physical 
-offset in the file to which that handler belongs. The handler's name (defined 
-by the ROM) can also provide a good suggestion of what the handler does. For 
-example, `$SMISS` is the handler that handles 'Sleep State' requests.
+The most crucial piece of information provided by sdtlist for this challenge is
+the **Handle SMI foff** field. This indicates the physical file offset where a
+particular handler is located, which is important for identifying and working
+with these handlers. Additionally, the handler's name, as defined in the ROM,
+can give clues about its function. For example, a handler named `$SMISS` is
+likely related to managing sleep state in the system.
 
-Several questions arise:
+Several important considerations must be kept in mind when working with these
+handlers:
 
-1. Can I then change any handler? No, never!
-2. I've chosen `$SMIABC`, how is it invoked? I don't know. You must reverse 
-engineer the handler and investigate its functionality in the system. Different 
-handlers are invoked in different ways and contexts. Some are periodic, while 
-others are not. Some occur when your hardware is malfunctioning, while others 
-are used to extend functionality. It varies.
-3. So, which one should I choose? Let's move to the next section.
+- It's critical to be careful when choosing which handler to modify and what
+  modifications apply, as any changes can easily disrupt the proper functioning
+  of the BIOS and the system;
 
-## Get to know the magical `$SMIED` handler!
+- To understand how a specific handler, like `$SMIABC`, is invoked, one must
+  rely on reverse engineering. The handler would have to be analyzed to
+  determine its role and how it is invoked in the system. Handlers can be quite
+  diverse in their functionality and invocation. Some might be periodic, others
+  might be event-driven, and they can vary based on system states or hardware
+  conditions.
 
-The most intriguing handler of all is undoubtedly the `$SMIED` handler, for a 
-few reasons:
+- The selection of a handler for further investigation depends on the specific
+  requirements or interests of the programmer.
 
-1. It *appears* to be a 'no-op' and doesn't seem to serve any useful purpose.
-2. It seems to be present in all AMIBIOS8 systems.
-3. It can be triggered in software by writing the value `0xDE` to port `0xB2`, 
-as in: `outb(0xDE, 0xB2)`.
+### The magical `$SMIED`
 
-### So, what should I do?
+The `$SMIED` handler has a few fascinating characteristics. At first glance, it
+appears to be "no-op", meaning it doesn't perform any obvious function.
+However, it seems to be present across most, if not all, AMIBIOS 8 systems,
+which suggests a hidden purpose. This handler can be triggered via software by
+writing the value `0xDE` to port `0xB2`, as in `outb(0xDE, 0xB2)`.
 
-1. Replace the `$SMIED` handler (or another if you're feeling lucky!) with one 
-of your preference. Be cautious about the size of your code to avoid 
-overwriting other possible handlers, and etc.
-2. Invoke your handler from anywhere using `outb(0xde, 0xb2)` (literally from 
-anywhere, even within Linux, Windows, bootable code, or any other environment).
+For this challenge, you have the possibility to replace the `$SMIED` handler
+with a custom handler of your choice. When doing this, it's crucial to be
+mindful of the size of your replacement code to avoid interfering with other
+handlers in the system.
 
-## Good references & final thoughts
+Once your custom handler is in place, you can activate it from virtually any
+environment (Linux, Windows, bootable code, etc.) simply by running code that
+performs the function of `outb(0xde, 0xb2)`.
 
-None of this would be possible without the incredible text on SMM: [.:: A Real 
-SMM Rootkit ::.]. It's a somewhat lengthy but definitely worth reading text 
-that provides a very practical understanding of the subject.
+### Final note
 
-You might also be interested in [SMMdump], a memory dumper tool that runs in 
-SMM mode written by me.
+None of this would be possible without [.:: A Real SMM Rootkit ::.], a somewhat
+lengthy but definitely worth reading paper on Phrack that provides a very
+in-depth and practical understanding of SMM.
+
+You might also be interested in [SMMdump], a memory dump tool that runs in 
+SMM mode from [Theldus], the same author of stdlist.
 
 [.:: A Real SMM Rootkit ::.]: http://phrack.org/issues/66/11.html
+[hypervisor]: https://en.wikipedia.org/wiki/Hypervisor
+[Intel Management Engine (ME)]: https://en.wikipedia.org/wiki/Intel_Management_Engine
+[Interrupt Descriptor Table (IDT)]: https://wiki.osdev.org/Interrupt_Descriptor_Table
+[Interrupt Vector Table (IVT)]: https://wiki.osdev.org/Interrupt_Vector_Table
 [SMMdump]: https://www.youtube.com/watch?v=gKA7HqrUtc8
+[System Management Interrupts (SMIs)]: https://wiki.osdev.org/System_Management_Mode#Triggering_SMM
+[System Management Mode (SMM)]: https://wiki.osdev.org/System_Management_Mode
+[Theldus]: https://github.com/Theldus
