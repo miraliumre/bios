@@ -31,8 +31,8 @@ BIOS firmware image.
 For **AMIBIOS 8** firmware images, the network boot ROM is easily identifiable
 and replaceable with the help of **[MMTool]**. The process is similar for
 **Award Modular BIOS v6.00PG**, despite slightly more inconvenient considering
-the less-than-friendly command line interface of **[CBROM]** and its tendency to
-produce corrupted firmware images.
+the less-than-friendly command line interface of **[CBROM]** and its tendency
+to produce corrupted firmware images.
 
 ![MMTool]
 
