@@ -38,7 +38,7 @@ refer to the [hints] file.
 <!-- External links -->
 [mdump]: https://github.com/Theldus/AMI_BIOS_CodeInjection/tree/main/tools/mdump
 [POST]: https://en.wikipedia.org/wiki/Power-on_self-test
-[Davidson Francis]: https://github.com/Theldus
+[Theldus]: https://github.com/Theldus
 
 <!-- Internal links -->
 [hints]: hints/README.md
